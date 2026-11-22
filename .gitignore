@@ -1,0 +1,29 @@
+# --- never commit: photos of the author (webcam test frames and images derived from them) ---
+/frames/
+/frames_digital/
+/frames_stress/
+/stress_preview.png
+/cat_a.png
+/cat_s_*.png
+ghostprompt_frames/
+
+# --- licensed third-party image (keep the source out; poster crops are anonymized) ---
+dahua_test/source/
+
+# --- large or machine-specific ---
+refusal-xmodal/results/raw/
+refusal-xmodal/results/raw_forward/
+refusal-xmodal/models/
+models/
+.venv*/
+env/
+node_modules/
+poster/dist/
+__pycache__/
+*.part[0-9][0-9]
+*.log
+
+# --- OS / editor ---
+.DS_Store
+.ipynb_checkpoints/
+dahua_test/dahua_results_strip.png

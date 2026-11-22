@@ -1,0 +1,14 @@
+# Extraction + analysis (tested on Jetson AGX Orin, Python 3.11, CPU)
+torch>=2.4
+torchvision>=0.19
+transformers>=4.49   # Qwen2.5-VL support; tested with 5.23
+pillow>=10
+numpy>=1.26
+scikit-learn>=1.4
+matplotlib>=3.8
+pandas>=2.1
+huggingface_hub>=0.24
+
+# Dashboard (any machine)
+streamlit>=1.36
+plotly>=5.22

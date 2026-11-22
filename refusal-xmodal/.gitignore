@@ -1,0 +1,9 @@
+# Large or machine-specific: never commit
+# per-item hidden states (hundreds of MB)
+results/raw/
+# model weights, if downloaded locally
+models/
+.venv*/
+env/
+__pycache__/
+*.part[0-9][0-9]

@@ -1,0 +1,70 @@
+{
+ "model": "Qwen2.5-VL-3B-Instruct",
+ "n_items": 200,
+ "n_pairs": 100,
+ "layers": 37,
+ "d_model": 2048,
+ "selected_layer_by_text_heldout": 28,
+ "at_selected_layer": {
+  "text_auc": 0.9382,
+  "text_auc_train": 0.94153125,
+  "text_bal_acc": 0.86,
+  "text_d": 2.4046321907636585,
+  "text_null95": 0.56433,
+  "text_refusal_auc": 0.9653759033545465,
+  "image_auc": 0.9495,
+  "image_auc_train": 0.95503125,
+  "image_bal_acc": 0.885,
+  "image_d": 2.442970876757191,
+  "image_null95": 0.59187,
+  "image_refusal_auc": 0.9096533333333334,
+  "transfer_auc": 0.9401999999999999,
+  "transfer_auc_train": 0.94153125,
+  "transfer_bal_acc": 0.8,
+  "transfer_d": 2.346981591070844,
+  "transfer_null95": 0.57687,
+  "transfer_refusal_auc": 0.9323733333333334,
+  "cosine_text_image": 0.8569687604904175,
+  "cosine_null": 0.007492659613490105
+ },
+ "ci95_at_selected": {
+  "text": [
+   0.910095,
+   0.96431
+  ],
+  "image": [
+   0.9217850000000001,
+   0.9743025000000001
+  ],
+  "transfer": [
+   0.9088924999999999,
+   0.9657999999999999
+  ]
+ },
+ "refusal_rate": {
+  "text": {
+   "harmful": 0.97,
+   "benign": 0.3
+  },
+  "image": {
+   "harmful": 0.91,
+   "benign": 0.34
+  }
+ },
+ "label_counts": {
+  "text": {
+   "REFUSED": 127,
+   "COMPLIED": 73,
+   "AMBIGUOUS": 0
+  },
+  "image": {
+   "REFUSED": 125,
+   "COMPLIED": 75,
+   "AMBIGUOUS": 0
+  }
+ },
+ "median_seconds": {
+  "text": 0.92,
+  "image": 0.41
+ }
+}
