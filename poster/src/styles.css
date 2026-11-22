@@ -161,3 +161,14 @@ body { font-family: Inter, 'Helvetica Neue', Arial, sans-serif; }
 .lenient-v { font-weight: 800; color: var(--muted); }
 .lenient-v.hit { color: var(--coral); }
 .feeds3 + .note { margin-top: 12px !important; }
+
+.car { display: grid; grid-template-columns: 1fr 1fr 1.35fr; gap: 16px; align-items: start; }
+.car-f { margin: 0; }
+.car .pill-ov { font-size: 21px; padding: 2px 12px; border-width: 3px; left: 8px; top: 8px; }
+.car .feed-img { border-width: 3px; border-radius: 12px; }
+.car-l { font-size: 19px; color: var(--muted); margin-top: 4px; }
+.car-t { font-size: 21px !important; line-height: 1.35 !important; color: var(--ink); }
+
+.col-3 h3 { margin-top: 22px !important; }
+.col-3 .poster-h2, .col-3 h2 { margin-bottom: 14px !important; }
+.feeds3 .lenient { margin-top: 4px; }

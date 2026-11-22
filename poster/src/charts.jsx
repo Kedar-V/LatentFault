@@ -125,7 +125,7 @@ export function InterventionChart({ w = 1180, h = 610, dark = false }) {
 
 // Figure 4: how strongly each input activates the harm direction (mean projection, layers 19-36).
 // One row per comparison, value printed on each dot. Typed requests are shown only for scale.
-export function ProjectionStrip({ w = 1000, h = 364 }) {
+export function ProjectionStrip({ w = 1000 }) {
   const m = { l: 430, r: 70 };
   const x = lin(0, 60, m.l, w - m.r);
   const rows = D.projection;
@@ -138,16 +138,14 @@ export function ProjectionStrip({ w = 1000, h = 364 }) {
     { label: 'Context: typed harmful (avg)', v: get('reference-harmful'), col: C.grey, fill: C.grey, ctx: true },
     { label: 'Context: typed benign (avg)', v: get('reference-benign'), col: C.grey, fill: '#fff', ctx: true },
     { g: true },
-    { label: 'Webcam: no phone', v: get('control-person'), col: C.greyDark, fill: '#fff', note: 'ALERT' },
-    { label: `Webcam: ${others.length} other texts`, range: [lo, hi], col: C.greyDark, note: 'all ALERT' },
-    { label: 'Webcam: forged answer', v: get('attack-schema-mimic'), col: C.coral, fill: C.coral, note: 'NO ALERT', bold: true },
-    { g: true },
-    { label: 'Dahua: command sign', v: dah('command').harm_proj, col: C.greyDark, fill: '#fff', note: 'ALERT' },
-    { label: 'Dahua: forged sign', v: dah('forged').harm_proj, col: C.coral, fill: C.coral, note: 'NO ALERT', bold: true },
+    { label: 'Webcam: forged answer (3)', v: get('attack-schema-mimic'), col: C.coral, fill: C.coral, note: 'NO ALERT', bold: true },
+    { label: 'Dahua: authoritative (2)', v: dah('command').harm_proj, col: C.greyDark, fill: '#fff', note: 'ALERT' },
+    { label: 'Dahua: forged answer (3)', v: dah('forged').harm_proj, col: C.coral, fill: C.coral, note: 'NO ALERT', bold: true },
   ];
   let yy = 0;
   const pos = R.map((r) => { yy += r.g ? 24 : 32; return yy; });
   const axisY = yy + 26;
+  const h = axisY + 74;
   return (
     <svg viewBox={`0 0 ${w} ${h}`} width="100%" role="img" aria-label="Harm-direction activation: harmful typed requests 57.7, benign 14.4, camera frames 1.4 to 3.4; the forged answer that fooled the camera is 3.4">
       {[0, 20, 40, 60].map((t) => (
