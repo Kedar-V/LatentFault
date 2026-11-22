@@ -24,7 +24,7 @@ The toolbar has zoom −/+, **Fit**, **Print size** (1 CSS px = 1/96 in), **Edit
 
 - **Last-minute text edits:** click **Edit text**, click any text block, type. Edits are saved in this browser (localStorage). Use **Save edits** / **Load edits** to move them to another machine, or **Reset text** to drop them. Permanent changes go in `src/Poster.jsx`.
 - **Layout:** the column sliders change the left/center/right widths; defaults are in `src/config.js`.
-- **QR code:** set `REPO_URL` in `src/config.js` once the repository is public; the QR appears in the header.
+- **QR code:** the footer QR points to `REPO_URL` in `src/config.js`. After changing it, run `node scripts/make_qr.mjs` to regenerate the vector QR (`src/data/qr.svg`).
 - **Exact files for printing** (recommended over the browser dialog):
 
 ```bash
@@ -114,7 +114,6 @@ Spacing: 0.9 in outer margins, 0.75 in gutters, about 0.5 in between sections. B
 ## Known gaps
 
 - **No webcam photo.** The camera frames show the author, so the poster uses a labelled schematic. Its phone screen copies the real forged-answer screen (`assets/phone_screen_forged_answer.png`).
-- **No QR code** until there is a public repository URL.
 - **References** were written from memory with arXiv IDs and were not re-checked online. Check them before printing.
 - **The webcam photo the redesign brief asked for is not used.** The illustration shows a generic silhouette with the two real phone screens.
 - The camera-attack decisions on the poster come from the full-precision projection run. The earlier Ollama runs agree for the forged answer, which got NO ALERT on both framings. They differ for the fake console, which got NO ALERT on one Ollama framing but ALERT in the full-precision run.

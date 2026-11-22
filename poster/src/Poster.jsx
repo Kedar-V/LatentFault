@@ -1,6 +1,8 @@
 import React from 'react';
 import { E } from './editable.jsx';
 import A3 from './data/act3d.json';
+import qrSvg from './data/qr.svg?raw';
+import { REPO_URL } from './config.js';
 import { InterventionChart, ProjectionStrip, HeroFan, Activation2D, D, pct } from './charts.jsx';
 import dahuaCommand from '../assets/dahua_command.jpg';
 import dahuaForged from '../assets/dahua_forged.jpg';
@@ -35,7 +37,6 @@ export default function Poster({ cols, qr }) {
             <E id="title2" as="div" className="title2">One Direction, Two Failure Modes</E>
             <E id="subtitle" as="div" className="subtitle">Cross-Modal Refusal Representations and Physical Prompt Injection in Qwen2.5-VL</E>
             <E id="rq" as="p" className="rq">Does the same internal direction control refusal for text and images, and do physical prompt-injection attacks exploit it?</E>
-            {qr ? <img className="qr" src={qr} alt="Repository QR code" /> : null}
           </div>
           <div>
             <div className="hero-fig"><HeroFan /></div>
@@ -114,6 +115,14 @@ export default function Poster({ cols, qr }) {
             <li>Refusal judged from 40-token replies</li>
             <li>Physical tests: single exploratory trials</li>
           </E>
+        </div>
+        <div className="ft-qr">
+          <div className="qr" role="img" aria-label={`QR code linking to ${REPO_URL}`} dangerouslySetInnerHTML={{ __html: qrSvg }} />
+          <div className="qr-t">
+            <div className="qr-l">Code, data &amp; setup</div>
+            <div className="qr-u">github.com/</div>
+            <div className="qr-u">Kedar-V/LatentFault</div>
+          </div>
         </div>
         <div className="ft-col refs">
           <E id="ft.refs.h" as="div" className="ft-h">References</E>
