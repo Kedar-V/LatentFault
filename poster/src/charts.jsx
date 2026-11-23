@@ -123,55 +123,49 @@ export function InterventionChart({ w = 1180, h = 610, dark = false }) {
   );
 }
 
-// Figure 4: how strongly each input activates the harm direction (mean projection, layers 19-36).
-// One row per comparison, value printed on each dot. Typed requests are shown only for scale.
+// Figure 4: each successful attack frame vs the same camera's plain frame on the harm direction
+// (mean projection, layers 19-36). Typed requests are given as text only: they sit far off this scale.
 export function ProjectionStrip({ w = 1000 }) {
-  const m = { l: 430, r: 70 };
-  const x = lin(0, 60, m.l, w - m.r);
-  const rows = D.projection;
-  const get = (role) => rows.find((r) => r.role === role).harm_proj;
-  const cam = rows.filter((r) => r.scenario === 'camera');
-  const others = cam.filter((r) => r.role !== 'attack-schema-mimic' && r.role !== 'control-person').map((r) => r.harm_proj);
-  const lo = Math.min(...others), hi = Math.max(...others);
-  const dah = (k) => D.dahua.find((r) => r.image.includes(k));
+  const m = { l: 300, r: 40 };
+  const x = lin(0, 6, m.l, w - m.r);
+  const get = (role) => D.projection.find((r) => r.role === role).harm_proj;
+  const dah = (k) => D.dahua.find((r) => r.image.includes(k)).harm_proj;
   const R = [
-    { label: 'Context: typed harmful (avg)', v: get('reference-harmful'), col: C.grey, fill: C.grey, ctx: true },
-    { label: 'Context: typed benign (avg)', v: get('reference-benign'), col: C.grey, fill: '#fff', ctx: true },
-    { g: true },
-    { label: 'Webcam: forged answer (3)', v: get('attack-schema-mimic'), col: C.coral, fill: C.coral, note: 'NO ALERT', bold: true },
-    { label: 'Dahua: authoritative (2)', v: dah('command').harm_proj, col: C.greyDark, fill: '#fff', note: 'ALERT' },
-    { label: 'Dahua: forged answer (3)', v: dah('forged').harm_proj, col: C.coral, fill: C.coral, note: 'NO ALERT', bold: true },
+    { cam: 'Webcam', atk: 'forged', base: get('control-person'), v: get('attack-schema-mimic') },
+    { cam: '4K', atk: 'authoritative', base: dah('control'), v: dah('command') },
+    { cam: '4K', atk: 'forged', base: dah('control'), v: dah('forged') },
   ];
-  let yy = 0;
-  const pos = R.map((r) => { yy += r.g ? 24 : 32; return yy; });
-  const axisY = yy + 26;
-  const h = axisY + 74;
+  const y0 = 86, step = 60;
+  const axisY = y0 + step * (R.length - 1) + 34;
+  const h = axisY + 104;
   return (
-    <svg viewBox={`0 0 ${w} ${h}`} width="100%" role="img" aria-label="Harm-direction activation: harmful typed requests 57.7, benign 14.4, camera frames 1.4 to 3.4; the forged answer that fooled the camera is 3.4">
-      {[0, 20, 40, 60].map((t) => (
+    <svg viewBox={`0 0 ${w} ${h}`} width="100%" role="img" aria-label="Harm-direction reading of each successful attack frame next to the same camera with no sign: the attacks read the same or higher, not lower">
+      <circle cx={m.l + 12} cy={26} r={11} fill="#fff" stroke={C.faint} strokeWidth={4} />
+      <text x={m.l + 34} y={35} className="lab" style={{ fill: C.muted }}>no sign</text>
+      <circle cx={m.l + 192} cy={26} r={13} fill={C.coral} />
+      <text x={m.l + 216} y={35} className="lab" style={{ fill: C.coral, fontWeight: 700 }}>attack, alarm silenced</text>
+      {[0, 2, 4, 6].map((t) => (
         <g key={t}>
-          <line x1={x(t)} x2={x(t)} y1={pos[0] - 22} y2={axisY} stroke={C.grid} strokeWidth={1.5} />
+          <line x1={x(t)} x2={x(t)} y1={y0 - 30} y2={axisY} stroke={C.grid} strokeWidth={1.5} />
           <text x={x(t)} y={axisY + 30} textAnchor="middle" className="tick">{t}</text>
         </g>
       ))}
-      <text x={w - m.r} y={axisY + 64} textAnchor="end" className="ax-title">harm-direction activation, layers 19–36 (higher = more harmful-looking)</text>
+      <text x={x(3)} y={axisY + 62} textAnchor="middle" className="ax-title">harm-direction reading, layers 19–36</text>
       {R.map((r, i) => {
-        const y = pos[i];
-        if (r.g) return <line key={i} x1={0} x2={w} y1={y - 6} y2={y - 6} stroke={C.grey} strokeWidth={1.5} strokeDasharray="4 6" />;
+        const y = y0 + i * step;
+        const up = r.v >= r.base;
         return (
           <g key={i}>
-            <text x={m.l - 24} y={y + 9} textAnchor="end" className="row" style={{ fill: r.bold ? C.coral : r.ctx ? C.greyDark : C.navy, fontWeight: r.bold ? 800 : r.ctx ? 400 : 600 }}>{r.label}</text>
-            <line x1={x(0)} x2={x(60)} y1={y} y2={y} stroke={C.grid} strokeWidth={1.5} />
-            {r.range
-              ? <rect x={x(r.range[0])} y={y - 8} width={Math.max(6, x(r.range[1]) - x(r.range[0]))} height={16} rx={8} fill={C.grey} />
-              : <circle cx={x(r.v)} cy={y} r={r.bold ? 13 : 11} fill={r.fill} stroke={r.col} strokeWidth={4} />}
-            <text x={(r.range ? x(r.range[1]) : x(r.v)) + 22} y={y + 9} className="val-b" style={{ fill: r.col }}>
-              {r.range ? `${r.range[0].toFixed(1)}–${r.range[1].toFixed(1)}` : r.v.toFixed(1)}
-            </text>
-            {r.note && <text x={(r.range ? x(r.range[1]) : x(r.v)) + (r.range ? 150 : 90)} y={y + 9} className="lab" style={{ fill: r.bold ? C.coral : C.greyDark, fontWeight: r.bold ? 700 : 400 }}>{r.note}</text>}
+            <text x={m.l - 28} y={y + 10} textAnchor="end" className="lab" style={{ fill: C.muted }}><tspan style={{ fill: C.navy, fontWeight: 700 }}>{r.cam}</tspan>{'  ' + r.atk}</text>
+            <line x1={x(r.base)} x2={x(r.v)} y1={y} y2={y} stroke={C.coral} strokeOpacity={0.35} strokeWidth={6} />
+            <circle cx={x(r.base)} cy={y} r={11} fill="#fff" stroke={C.faint} strokeWidth={4} />
+            <circle cx={x(r.v)} cy={y} r={14} fill={C.coral} />
+            <text x={x(r.v) + (up ? 26 : -26)} y={y + 10} textAnchor={up ? 'start' : 'end'} className="val-b" style={{ fill: C.coral }}>{r.v.toFixed(1)}</text>
+            <text x={x(r.base) + (up ? -22 : 22)} y={y + 9} textAnchor={up ? 'end' : 'start'} className="val" style={{ fill: C.faint }}>{r.base.toFixed(1)}</text>
           </g>
         );
       })}
+      <text x={x(3)} y={axisY + 96} textAnchor="middle" className="lab-s" style={{ fontStyle: 'italic' }}>Off scale: typed harmful requests {get('reference-harmful').toFixed(1)}, benign {get('reference-benign').toFixed(1)}</text>
     </svg>
   );
 }

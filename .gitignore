@@ -27,3 +27,6 @@ __pycache__/
 .DS_Store
 .ipynb_checkpoints/
 dahua_test/dahua_results_strip.png
+
+# --- demo build output ---
+demo/dist/

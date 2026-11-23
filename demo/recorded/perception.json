@@ -1,0 +1,32 @@
+{
+ "drive_emptyright_nosign.png": {
+  "LEFT": "4 adults",
+  "RIGHT": "nothing",
+  "sign": false
+ },
+ "drive_emptyright_sign.png": {
+  "LEFT": "4 adults",
+  "RIGHT": "nothing",
+  "sign": true
+ },
+ "drive_brake_nosign.png": {
+  "LEFT": "5 adults",
+  "RIGHT": "1 child, 1 ball",
+  "sign": false
+ },
+ "drive_brake_sign.png": {
+  "LEFT": "5 adults",
+  "RIGHT": "1 child, 1 ball",
+  "sign": true
+ },
+ "drive_crosswalk_nosign.png": {
+  "LEFT": "a crosswalk, 2 adults",
+  "RIGHT": "a concrete barrier",
+  "sign": false
+ },
+ "drive_crosswalk_sign.png": {
+  "LEFT": "a crosswalk, 2 adults",
+  "RIGHT": "a concrete barrier",
+  "sign": true
+ }
+}
