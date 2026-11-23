@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LatentFault Demo</title>
+  <script type="module" crossorigin src="/LatentFault/assets/index-BIo90tWG.js"></script>
+  <link rel="stylesheet" crossorigin href="/LatentFault/assets/index-D9rcsoh9.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><span class="b-a">Latent</span><span class="b-b">Fault</span><span class="tag rec">Real recorded model answers</span></div>
+    <nav class="tabs">
+      <button data-mode="driving" class="on">Driving</button>
+      <button data-mode="camera">Security camera</button>
+    </nav>
+    <label class="model">Model
+      <select id="model"></select>
+    </label>
+  </header>
+
+  <main class="layout">
+    <section class="view" id="view">
+      <div class="ov ov-driving">
+        <div class="hud" id="d-hud">
+          <div class="hud-h"><span class="dot"></span><span id="d-status">READY</span></div>
+          <pre id="d-out">Pick a scenario and press Run.</pre>
+        </div>
+        <div class="banner" id="d-banner"></div>
+        <div class="dash">
+          <svg class="wheel" id="wheel" viewBox="-100 -100 200 200" aria-hidden="true">
+            <circle r="86" fill="none" stroke="#1b1f26" stroke-width="22" />
+            <circle r="86" fill="none" stroke="#2b313b" stroke-width="6" />
+            <path d="M-80,10 L-25,18 L0,40 L25,18 L80,10" fill="none" stroke="#1b1f26" stroke-width="20" stroke-linejoin="round" />
+            <circle r="20" fill="#1b1f26" /><circle r="8" fill="#d2483c" />
+          </svg>
+          <div class="speedo"><b id="speed">0</b><span>km/h</span><em>BRAKES FAILED</em></div>
+        </div>
+      </div>
+      <div class="ov ov-camera">
+        <div class="cctv-top"><span>CAM 03 · LOBBY</span><span id="clock"></span><span class="rec"><i></i>REC</span></div>
+        <div class="scan"></div>
+        <div class="cam-out" id="c-hud">
+          <div class="hud-h"><span class="dot"></span><span id="c-status">MONITORING</span></div>
+          <pre id="c-out">Pick a character and press Run.</pre>
+        </div>
+        <div class="alarm" id="alarm"></div>
+      </div>
+    </section>
+
+    <aside class="side">
+      <div class="panel">
+        <h2 id="side-h">Scenarios</h2>
+        <div class="list" id="list"></div>
+        <div class="row" id="sign-row">
+          <span>Roadside sign</span>
+          <div class="seg" id="sign-seg"><button data-v="0">Off</button><button data-v="1" class="on">On</button></div>
+        </div>
+        <div class="row" id="think-row">
+          <span>Perception</span>
+          <div class="seg" id="think-seg"><button data-v="0" class="on">Model only</button><button data-v="1">Perfect perception</button></div>
+        </div>
+        <button class="run" id="run">Run</button>
+      </div>
+      <div class="panel">
+        <h2>What the model saw</h2>
+        <img class="seen" id="seen" alt="The exact frame sent to the model" />
+        <h2 style="margin-top:16px">How each model performs</h2>
+        <p class="sub" id="metric"></p>
+        <table id="table"></table>
+        <p class="src">Each run replays one real answer. Frames rendered from this demo and sent to Qwen2.5-VL (Ollama, temperature 0.7, 10 samples per setting; driving asked in both LEFT/RIGHT orders). Prompts match the poster experiments.</p>
+      </div>
+    </aside>
+  </main>
+</body>
+</html>
